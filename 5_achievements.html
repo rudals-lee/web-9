@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개발자 성장 여정 - 포트폴리오</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: rgba(255,255,255,0.3);
+            transform: translateX(-50%);
+        }
+
+        .milestone {
+            position: relative;
+            margin: 50px 0;
+            opacity: 0;
+            animation: slideInUp 0.8s ease forwards;
+        }
+
+        .milestone:nth-child(1) { animation-delay: 0.3s; }
+        .milestone:nth-child(2) { animation-delay: 0.6s; }
+        .milestone:nth-child(3) { animation-delay: 0.9s; }
+
+        .milestone-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 45%;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .milestone-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .milestone:nth-child(odd) .milestone-content {
+            margin-left: 0;
+        }
+
+        .milestone:nth-child(even) .milestone-content {
+            margin-left: 55%;
+        }
+
+        .milestone-dot {
+            position: absolute;
+            left: 50%;
+            top: 50px;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border: 4px solid #667eea;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .milestone-date {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .milestone h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .tech-stack {
+            margin: 20px 0;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tech-tag {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .achievement {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .achievement h4 {
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .progress-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 50px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .progress-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-size: 2rem;
+        }
+
+        .skill-item {
+            margin-bottom: 25px;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 10px;
+            transition: width 2s ease;
+            animation: fillProgress 2s ease forwards;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            background: #f8f9fa;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fillProgress {
+            from { width: 0%; }
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .milestone-content {
+                width: calc(100% - 50px);
+                margin-left: 50px !important;
+            }
+
+            .milestone-dot {
+                left: 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .tech-tags {
+                justify-content: center;
+            }
+        }
+
+
+
+        /* 네비게이션 헤더  추가*/
+        .nav-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-logo {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            color: #2c3e50;
+        }
+
+        .menu-btn:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: scale(1.1);
+        }
+
+        /* 사이드 메뉴 */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+            transition: right 0.4s ease;
+            z-index: 1001;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .side-menu.active {
+            right: 0;
+        }
+
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .menu-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .close-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-section {
+            margin-bottom: 25px;
+        }
+
+        .menu-section h3 {
+            color: #34495e;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            padding-left: 10px;
+            border-left: 4px solid #764ba2;
+        }
+
+        .menu-items {
+            list-style: none;
+        }
+
+        .menu-items li {
+            margin-bottom: 8px;
+        }
+
+        .menu-items a {
+            display: block;
+            padding: 12px 15px;
+            color: #555;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .menu-items a:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateX(5px);
+        }
+        .nav-logo img { height: 60px; width: 60px; }
+    </style>
+</head>
+<body>
+    <div class="container" id="p1">
+        <!-- 네비게이션 헤더 -->
+    <div class="nav-header">
+        <div class="nav-logo">
+            <a href="/HOME.html"><img src="/images/LEGALWEB-2.png" alt="법률문서 로고"/></a>
+        </div>
+        <button class="menu-btn" id="menuBtn">☰</button>
+    </div>
+
+    <!-- 오버레이 -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- 사이드 메뉴 -->
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <div class="menu-title">메뉴</div>
+            <button class="close-btn" id="closeBtn">✕</button>
+        </div>
+
+        <div class="menu-section">
+            <h3>📚 주요 섹션</h3>
+            <ul class="menu-items">
+                <li><a href="#p1">개발 여정</a></li>
+                <li><a href="#p2">첫 완성</a></li>
+                <li><a href="#p3">기술 스택 전환</a></li>
+            </ul>
+        </div>
+
+        <div class="menu-section">
+            <h3>🎯 현재 기술 역량</h3>
+            <ul class="menu-items">
+                <li><a href="#problem1">1번 - React.js</a></li>
+                <li><a href="#problem2">2번 - JavaScript (ES6+)</a></li>
+                <li><a href="#problem3">3번 - HTML5 & CSS3</a></li>
+                <li><a href="#problem4">4번 - Tailwind CSS</a></li>
+                <li><a href="#problem5">5번 - Git & GitHub</a></li>
+            </ul>
+        </div>
+
+        <div class="menu-section">
+            <h3>🏆 다음 목표 : 세무사 되기</h3>
+            <ul class="menu-items">
+                <li><a href="#problem">1번 - 1차 재정학</a></li>
+                <li><a href="#problem">2번 - 1차 세법</a></li>
+            </ul>
+        </div>
+
+        <div class="menu-section">
+            <h3>🔗 외부 링크</h3>
+            <ul class="menu-items">
+                <li><a href="https://www.hackers.co.kr" target="_blank">해커스 세무사</a></li>
+                <li><a href="#" onclick="window.print()">페이지 인쇄</a></li>
+            </ul>
+        </div>
+
+        <a href="#" class="cta-button" onclick="showContact()">연락하기</a>
+    </div>
+
+        <div class="header fade-in"></div>
+        <div class="timeline">
+            <div class="milestone">
+                <div class="milestone-dot" id="header-section1"></div>
+                <div class="milestone-content">
+                    <div class="milestone-date">2025년 2월 - 시작</div>
+                    <h3>🌱 개발 여정의 첫 걸음</h3>
+                    <p>6개월 간의 국비지원으로 시작한 웹 개발 교육. HTML의 기본 태그부터 차근차근 배우며 첫 번째 웹페이지를 만들었습니다.</p>
+                    
+                    <div class="tech-stack">
+                        <strong>학습 기술:</strong>
+                        <div class="tech-tags">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">기본 JavaScript</span>
+                        </div>
+                    </div>
+
+                    <div class="achievement">
+                        <h4>🎯 첫 달성</h4>
+                        <p>• 정적 웹페이지 3개 제작<br>
+                        • CSS Flexbox & Grid 마스터<br>
+                        • JavaScript 기본 문법 습득</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="milestone" id="p2">
+                <div class="milestone-dot" id="header-section2"></div>
+                <div class="milestone-content">
+                    <div class="milestone-date">2025년 6월 - 첫 완성작</div>
+                    <h3>🎨 HTML/CSS/JavaScript 기반 첫 완성 프로젝트</h3>
+                    <p>3개월간의 교육의 결과물로 완전한 기능을 가진 인터랙티브 웹 애플리케이션을 완성했습니다. 반응형 디자인과 동적 기능을 모두 구현한 의미있는 첫 프로젝트입니다.</p>
+                    
+                    <div class="tech-stack">
+                        <strong>사용 기술:</strong>
+                        <div class="tech-tags">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">Vanilla JavaScript</span>
+                            <span class="tech-tag">Bootstrap</span>
+                            <span class="tech-tag">jQuery</span>
+                        </div>
+                    </div>
+
+                    <div class="achievement">
+                        <h4>🏆 3개월 성과물</h4>
+                        <p>• 완전한 반응형 웹 애플리케이션 구현<br>
+                        • 사용자 인터랙션 및 애니메이션 추가<br>
+                        • 크로스 브라우저 호환성 확보<br>
+                        • 깔끔한 UI/UX 디자인 완성</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="milestone" id="p3">
+                <div class="milestone-dot" id="header-section3"></div>
+                <div class="milestone-content" >
+                    <div class="milestone-date">2025년 7월 - 기술스택 전환</div>
+                    <h3>⚛️ Bootstrap + jQuery → React + Tailwind로 기술스택 전환</h3>
+                    <p>현대적인 개발 트렌드에 맞춰 기술스택을 전면 업그레이드했습니다. 컴포넌트 기반 개발과 최신 CSS 프레임워크를 도입하여 포트폴리오를 완전히 새롭게 구축했습니다.</p>
+                    
+                    <div class="tech-stack">
+                        <strong>업그레이드된 기술:</strong>
+                        <div class="tech-tags">
+                            <span class="tech-tag">React.js</span>
+                            <span class="tech-tag">Tailwind CSS</span>
+                            <span class="tech-tag">ES6+</span>
+                            <span class="tech-tag">Webpack</span>
+                            <span class="tech-tag">Git/GitHub</span>
+                        </div>
+                    </div>
+
+                    <div class="achievement">
+                        <h4>🔄 포트폴리오 전면 개선</h4>
+                        <p>• 기존 프로젝트 React로 마이그레이션<br>
+                        • Tailwind로 디자인 시스템 구축<br>
+                        • 컴포넌트 재사용성 극대화<br>
+                        • 성능 최적화 및 번들 사이즈 개선</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-section">
+            <h2>📊 현재 기술 역량</h2>
+            
+            <div class="skill-item">
+                <div class="skill-name" id="problem1">
+                    <span>React.js</span>
+                    <span>85%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 85%"></div>
+                </div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-name" id="problem2">
+                    <span>JavaScript (ES6+)</span>
+                    <span>90%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 90%"></div>
+                </div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-name" id="problem3">
+                    <span>HTML5 & CSS3</span>
+                    <span>95%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 95%"></div>
+                </div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-name" id="problem4"> 
+                    <span>Tailwind CSS</span>
+                    <span>80%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 80%"></div>
+                </div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-name" id="problem5">
+                    <span>Git & GitHub</span>
+                    <span>75%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <h2>🎯 지속적인 성장을 위한 다음 목표</h2>
+            <p>1차 재정학, 세법 지식의 심화 학습, 회계 이론의 체계적 정리, 실무 경험 확장을 통해<br>
+            전문성과 신뢰를 갖춘 세무사로 성장하겠습니다.</p>
+            <!-- <a href="#" class="cta-button" onclick="showContact()">연락하기</a> -->
+        </div>
+
+    </div>
+
+    <script>
+        // 스크롤 애니메이션
+        function animateOnScroll() {
+            const milestones = document.querySelectorAll('.milestone');
+            const progressBars = document.querySelectorAll('.progress-fill');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            milestones.forEach(milestone => {
+                observer.observe(milestone);
+            });
+
+            // 진행바 애니메이션
+            const progressObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const progressFill = entry.target.querySelector('.progress-fill');
+                        if (progressFill) {
+                            const width = progressFill.style.width;
+                            progressFill.style.width = '0%';
+                            setTimeout(() => {
+                                progressFill.style.width = width;
+                            }, 100);
+                        }
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('.skill-item').forEach(item => {
+                progressObserver.observe(item);
+            });
+        }
+
+        // 연락 모달
+        function showContact() {
+            alert('📧 연락처: developer@example.com\n📱 GitHub: github.com/developer\n💼 LinkedIn: linkedin.com/in/developer');
+        }
+
+        // 기술 태그 호버 효과
+        function addHoverEffects() {
+            const techTags = document.querySelectorAll('.tech-tag');
+            techTags.forEach(tag => {
+                tag.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05) rotate(2deg)';
+                });
+                
+                tag.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) rotate(0deg)';
+                });
+            });
+        }
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            animateOnScroll();
+            addHoverEffects();
+            
+            // 헤더 타이핑 효과
+            const headerText = document.querySelector('.header h1');
+            headerText.style.opacity = '0';
+            setTimeout(() => {
+                headerText.style.opacity = '1';
+                headerText.style.animation = 'fadeInDown 1s ease';
+            }, 200);
+        });
+
+        // 스크롤 부드럽게 하기
+        document.documentElement.style.scrollBehavior = 'smooth';
+
+
+
+
+// 메뉴 기능 추가
+        const menuBtn = document.getElementById('menuBtn');
+        const closeBtn = document.getElementById('closeBtn');
+        const sideMenu = document.getElementById('sideMenu');
+        const overlay = document.getElementById('overlay');
+
+        // 메뉴 열기
+        function openMenu() {
+            sideMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 메뉴 닫기
+        function closeMenu() {
+            sideMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // 이벤트 리스너
+        menuBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openMenu();
+        });
+
+        closeBtn.addEventListener('click', closeMenu);
+        overlay.addEventListener('click', closeMenu);
+
+        // 메뉴 항목 클릭 시 메뉴 닫기
+        const menuItems = document.querySelectorAll('.menu-items a');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                // 내부 링크인 경우에만 메뉴 닫기
+                if (this.getAttribute('href').startsWith('#')) {
+                    closeMenu();
+                }
+            });
+        });
+
+        // ESC 키로 메뉴 닫기
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeMenu();
+            }
+        });
+
+        // 부드러운 스크롤 (내부 링크용)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 스크롤 애니메이션
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // 모든 섹션에 애니메이션 적용
+        document.querySelectorAll('.section, .problem-section, .study-tips, .quiz-section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // 문제 아이템 호버 효과
+        document.querySelectorAll('.problem-item').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+                item.style.color = 'white';
+                item.style.transform = 'translateX(10px) scale(1.02)';
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                item.style.background = 'linear-gradient(135deg, #f8f9fa, #e9ecef)';
+                item.style.color = '#333';
+                item.style.transform = 'translateX(0) scale(1)';
+            });
+        });
+
+        // 메뉴 아이템 활성화 표시
+        function updateActiveMenuItem() {
+            const sections = document.querySelectorAll('[id]');
+            const menuLinks = document.querySelectorAll('.menu-items a[href^="#"]');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 100 && rect.bottom >= 100) {
+                    currentSection = section.id;
+                }
+            });
+            
+            menuLinks.forEach(link => {
+                link.style.background = '';
+                link.style.color = '';
+                
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+                    link.style.color = 'white';
+                }
+            });
+        }
+
+        // 스크롤 시 활성 메뉴 아이템 업데이트
+        window.addEventListener('scroll', updateActiveMenuItem);
+        
+        // 페이지 로드 시 초기 활성 아이템 설정
+        window.addEventListener('load', updateActiveMenuItem);
+    </script>
+</body>
+</html>
